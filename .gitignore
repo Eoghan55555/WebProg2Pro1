@@ -159,3 +159,5 @@ benchmarks/graphs
 # build folder
 
 build
+#
+.env
