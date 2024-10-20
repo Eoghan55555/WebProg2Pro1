@@ -30,20 +30,15 @@ export const getCatById = async (req: Request, res: Response) => {
     }
 };
 export const getCatsByFilter = async (req: Request, res: Response) => {
-    const { filter } = req.query; // Extract the filter from the query string
+    const { filter } = req.query; 
 
     try {
         let filterObj = {};
-
-        // Check if a filter is provided and parse it
         if (filter) {
-            // Parse the filter string to an object
+            
             filterObj = JSON.parse(filter as string);
         }
-
-        // Find cats using the filter
         const cats = (await collections.cats?.find(filterObj).toArray()) as Cats[];
-
         if (cats.length > 0) {
             res.status(200).json(cats);
         } else {
