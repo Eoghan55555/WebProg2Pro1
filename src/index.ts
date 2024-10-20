@@ -1,8 +1,10 @@
 import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import catRoutes from '../routes/cats';  // Import the cat routes
+import dotenv from "dotenv";
 
-const PORT = process.env.PORT || 3000;
+dotenv.config();
+const PORT = process.env.PORT || 300;
 
 const app: Application = express();
 app.use(morgan("tiny"));
