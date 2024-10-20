@@ -23,10 +23,10 @@ export const getCatById = async (req: Request, res: Response) => {
         if (cat) {
             res.status(200).send(cat);
         } else {
-            res.status(404).send(`Unable to find matching document with id: ${req.params.id}`);
+            res.status(404).send(`Unable to find matching cat with id: ${req.params.id}`);
         }
     } catch (error) {
-        res.status(404).send(`Unable to find matching document with id: ${req.params.id}`);
+        res.status(404).send(`Unable to find matching cat with id: ${req.params.id}`);
     }
 };
 export const getCatsByFilter = async (req: Request, res: Response) => {

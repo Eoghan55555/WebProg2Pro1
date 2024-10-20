@@ -1,20 +1,67 @@
-###
-### POST Request for a contact 
-## Expected result is ........
+### POST request with correct data.
+   ### 1- Successfully creating a new resource with valid data.
 POST http://localhost:3000/cats HTTP/1.1
 Content-Type: application/json
 
 { 
-    "name": "Tom", 
-    "breed": "Tabby", 
-    "age": 3 
+    "name": "Snowball", 
+    "breed": "Black and White", 
+    "age": 2
 }
-###
-GET http://localhost:3000/cats/67151bd5bbee211f35dd5dbc HTTP/1.1
-###
-### Delete a cat by ID
-DELETE http://localhost:3000/cats/67151d8df25aeaae28b60878 HTTP/1.1
+### POST request which fails validation.
+   ### 2 - Fails validation because the provided data is incorrect or incomplete.
+POST http://localhost:3000/cats HTTP/1.1
 Content-Type: application/json
-###
+
+{
+    "name": 54, 
+    "breed": "Tabby", 
+    "age": "3"
+}
+
+### GET request on the set of resources.
+  ### - Fetching a list of all resources available in the collection.
+GET http://localhost:3000/cats HTTP/1.1
+
+### GET request on an individual resource which succeeds.
+   ###- Successfully fetching a single resource by its unique identifier.
+GET http://localhost:3000/cats/67151bbabbee211f35dd343c HTTP/1.1   
+
+### GET request on an individual resource which fails.
+   ###- Fails because the resource could not be found, possibly due to an incorrect or missing ID.
+GET http://localhost:3000/cats/67151bbabbee211f35dd343 HTTP/1.1  
+### DELETE request on an individual resource which succeeds.
+   ###- Successfully deleting a resource by its unique identifier.
+DELETE http://localhost:3000/cats/67156872544b1cafdd1b2400 HTTP/1.1
+### DELETE request on an individual resource which fails.
+   ###- Fails because the resource could not be found, possibly due to an incorrect or missing ID.
+DELETE http://localhost:3000/cats/67156872544b1cafdd1b2400 HTTP/1.1
+### PUT request on an individual resource which succeeds.
+   ###- Successfully updating an existing resource with valid data.
+PUT http://localhost:3000/cats/6715685f544b1cafdd1b23ff HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Snowball",
+    "breed": "Black and White",
+    "age": 3
+}
+### PUT request on an individual resource which fails as the resource cannot be found.
+   ###- Fails because the resource does not exist or the ID is invalid.
+PUT http://localhost:3000/cats/67151bbabbee211f35dd3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Tom",
+    "breed": "Bengal",
+    "age": 4
+}
+
+### PUT request on an individual resource which fails as the data is not valid.
+    ###- Fails because the data provided for updating the resource is invalid.
+Have not achieved this
+
+
+### Tried Filtering but failed
 GET http://localhost:3000/cats?filter={"age":3} HTTP/1.1
 Content-Type: application/json
