@@ -4,5 +4,5 @@ export default interface Cats {
     name: string;
     breed: string;
     age: number;
-    id?: ObjectId;
+    _id?: ObjectId;
 }

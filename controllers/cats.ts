@@ -5,7 +5,9 @@ import { ObjectId} from 'mongodb';
 
 export const getCats = async (req: Request, res: Response) => {
     try {
+        
         const cats = (await collections.cats?.find({}).toArray()) as Cats[];
+        
         res.status(200).json(cats);
     } catch (error) {
         res.status(500).send("oppss");
@@ -27,14 +29,43 @@ export const getCatById = async (req: Request, res: Response) => {
         res.status(404).send(`Unable to find matching document with id: ${req.params.id}`);
     }
 };
+export const getCatsByFilter = async (req: Request, res: Response) => {
+    const { filter } = req.query; // Extract the filter from the query string
+
+    try {
+        let filterObj = {};
+
+        // Check if a filter is provided and parse it
+        if (filter) {
+            // Parse the filter string to an object
+            filterObj = JSON.parse(filter as string);
+        }
+
+        // Find cats using the filter
+        const cats = (await collections.cats?.find(filterObj).toArray()) as Cats[];
+
+        if (cats.length > 0) {
+            res.status(200).json(cats);
+        } else {
+            res.status(404).send(`No cats found with the specified criteria.`);
+        }
+    } catch (error) {
+        console.error("Error retrieving cats by filter:", error);
+        res.status(500).send("Error retrieving cats");
+    }
+};
 
 export const createCat = async (req: Request, res: Response) => {
-    // create a new cat in the database
+    console.log("Received request body:", req.body);
+    console.log("Request Headers:", req.headers); // Log headers
+
     try {
         const newCat = req.body as Cats;
 
-        const result = await collections.cats?.insertOne(newCat);
+        // Log the newCat object
+        console.log("Parsed new cat object:", newCat);
 
+        const result = await collections.cats?.insertOne(newCat);
         if (result) {
             res.status(201).location(`${result.insertedId}`).json({
                 message: `Created a new cat with id ${result.insertedId}`,
@@ -44,10 +75,12 @@ export const createCat = async (req: Request, res: Response) => {
             res.status(500).send("Failed to create a new cat.");
         }
     } catch (error) {
-        console.error(error);
+        console.error("Error creating cat:", error);
         res.status(400).send(`Unable to create new cat`);
     }
 };
+
+
 
 export const updateCat = async (req: Request, res: Response) => {
     let id: string = req.params.id;

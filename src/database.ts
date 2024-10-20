@@ -17,7 +17,7 @@ client.connect().then
 (()=>
   {
   db = client.db(dbName);
-  catsCollection  = db.collection('cats');
+  catsCollection  = db.collection('Cats');
   collections.cats = catsCollection;
   console.log('Connected to database');
 }
